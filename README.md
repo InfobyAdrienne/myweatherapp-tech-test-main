@@ -44,3 +44,22 @@ Good luck!
 Operating system: macOs
 
 Following the prerequisites, set an environment variable for your API key using `export VISUALCROSSING_API_KEY=your-api-key-here`. Test that the environment variable is set with `echo $VISUALCROSSING_API_KEY`. Setting the environment variable ensures that your API key is not committed to Git and remains secure. Remember, the environment variable must be set every time you start a new terminal session.
+
+To run the app use `mvn spring-boot:run` from your root folder.
+
+While the app is running, in a seperate terminal test the API using `curl -X GET "http://localhost:8080/forecast/London"`
+
+### User stories
+
+Daylight Hours Comparison
+
+1. Provide the name of two cities 
+2. The application fetches the sunrise and sunset data for each city from the weather API
+4. The length of daylight is calculated based on the difference between sunset and sunrise times
+5. The city with the longer day is returned
+
+The sunrise and sunset times are fetched from the currentConditions.sunrise and currentConditions.sunset fields in the weather API response.
+
+The result can be found by using `curl -X GET "http://localhost:8080/compare-daylight/{city1}/{city2}"`
+
+For example: `curl -X GET "http://localhost:8080/compare-daylight/Tokyo/London"` 
