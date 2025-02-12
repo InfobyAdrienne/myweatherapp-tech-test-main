@@ -38,3 +38,9 @@ You will need to implement these features by adding new endpoints to the `Weathe
 * Once you're ready to submit, raise a Pull Request to merge your changes with your main branch and share the repo with us.
 
 Good luck!
+
+### Instructions for getting started
+
+Operating system: macOs
+
+Following the prerequisites, set an environment variable for your API key using `export VISUALCROSSING_API_KEY=your-api-key-here`. Test that the environment variable is set with `echo $VISUALCROSSING_API_KEY`. Setting the environment variable ensures that your API key is not committed to Git and remains secure. Remember, the environment variable must be set every time you start a new terminal session.
