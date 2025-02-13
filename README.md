@@ -64,8 +64,21 @@ The result can be found by using `curl -X GET "http://localhost:8080/compare-day
 
 For example: `curl -X GET "http://localhost:8080/compare-daylight/Tokyo/London"` 
 
+Rain Check
+
+1. Provide the names of two cities
+2. The application fetches the curent weather conditions from each city from the weather API
+3. It checks if either or both conditions contain mention of rain 
+4. The city (or cities) where it is currently raining is returned
+
+The descritption of whether it is currenty raining or not is fetched from currentConditions.conditions field in the weather API response. From looking at what the json returns, this is the most reliable option. 
+
+The result can be found by using `curl -X GET "http://localhost:8080/compare-currently-raining/{city1}/{city2}"`
+
+For example: `curl -X GET "http://localhost:8080/compare-currently-raining/Tokyo/London"` 
+
 ### Testing
 
 To run tests do `mvn test` from the root.
 
-Unit testing is done using Mockito  
+Unit testing is done using Mockito.  

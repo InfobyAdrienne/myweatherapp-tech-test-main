@@ -24,13 +24,21 @@ public class WeatherController {
 
   // Endpoint to compare daylight hours between two cities
   @GetMapping("/compare-daylight/{city1}/{city2}")
-  public ResponseEntity<String> compareDaylight(@PathVariable("city1") String city1, @PathVariable("city2") String city2) {
-    
-    String daylightComparison = weatherService.compareDaylight(city1, city2);
-      
-      return ResponseEntity.ok(daylightComparison);
-  }
+  public ResponseEntity<String> compareDaylight(@PathVariable("city1") String city1,
+      @PathVariable("city2") String city2) {
 
-  // TODO: given two city names, check which city its currently raining in
+    String daylightComparison = weatherService.compareDaylight(city1, city2);
+
+    return ResponseEntity.ok(daylightComparison);
+  }
+  
+  @GetMapping("/compare-currently-raining/{city1}/{city2}")
+  public ResponseEntity<String> compareCurrentlyRaining(@PathVariable("city1") String city1,
+      @PathVariable("city2") String city2) {
+
+    String rainCheck = weatherService.compareCurrentlyRaining(city1, city2);
+
+    return ResponseEntity.ok(rainCheck);
+  }
 
 }

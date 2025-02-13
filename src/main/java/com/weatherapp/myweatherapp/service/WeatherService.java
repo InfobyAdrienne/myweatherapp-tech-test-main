@@ -47,7 +47,6 @@ public class WeatherService {
   }
 
   public int getDaylightHours(String city) {
-    // Fetch city info which includes current conditions
     CityInfo cityInfo = weatherRepo.getByCity(city);
 
     if (cityInfo == null) {
@@ -58,11 +57,9 @@ public class WeatherService {
       throw new RuntimeException("Unable to fetch current conditions for " + city);
     }
 
-    // Get sunrise and sunset times
     LocalTime sunrise = getSunriseTime(city);
     LocalTime sunset = getSunsetTime(city);
 
-    // Calculate daylight duration
     long daylightMinutes = Duration.between(sunrise, sunset).toMinutes();
     return (int) daylightMinutes / 60;
   }
@@ -77,6 +74,31 @@ public class WeatherService {
       return city2 + " has more daylight hours than " + city1;
     } else {
       return "Both cities have the same daylight duration."; // TODO: handle this case properly
+    }
+  }
+
+  public Boolean isCurrentlyRaining(String city) {
+    CityInfo cityInfo = weatherRepo.getByCity(city);
+
+    if (cityInfo.currentConditions.conditions.toLowerCase().contains("rain")) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public String compareCurrentlyRaining(String city1, String city2) {
+    Boolean city1Rain = isCurrentlyRaining(city1);
+    Boolean city2Rain = isCurrentlyRaining(city2);
+
+    if (city1Rain && city2Rain) {
+      return "Both cities are currently experiencing rain";
+    } else if (city1Rain) {
+      return city1 + " is currently experiencing rain";
+    } else if (city2Rain) {
+      return city2 + " is currently experiencing rain";
+    } else {
+      return "Neither city is currently experiencing rain";
     }
   }
 

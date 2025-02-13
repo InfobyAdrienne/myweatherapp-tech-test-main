@@ -99,5 +99,37 @@ class WeatherServiceTest {
     assertEquals("Lagos has more daylight hours than London", daylightComparison);
   }
 
+  @Test
+  void isCurrentlyRaining() {
+    CityInfo cityInfo = new CityInfo();
+    cityInfo.currentConditions = new CityInfo.CurrentConditions();
+    cityInfo.address = "Lagos";
+    cityInfo.currentConditions.conditions = "Rain";
+    Mockito.when(weatherRepo.getByCity(cityInfo.address)).thenReturn(cityInfo);
+
+    Boolean isRaining = weatherService.isCurrentlyRaining(cityInfo.address);
+
+    assertTrue(isRaining);
+  }
+
+  @Test
+  void compareCurrentlyRaining() {
+    CityInfo cityInfo1 = new CityInfo();
+    cityInfo1.currentConditions = new CityInfo.CurrentConditions();
+    cityInfo1.address = "Lagos";
+    cityInfo1.currentConditions.conditions = "Rain";
+    Mockito.when(weatherRepo.getByCity(cityInfo1.address)).thenReturn(cityInfo1);
+
+    CityInfo cityInfo2 = new CityInfo();
+    cityInfo2.currentConditions = new CityInfo.CurrentConditions();
+    cityInfo2.address = "London";
+    cityInfo2.currentConditions.conditions = "Sunny";
+    Mockito.when(weatherRepo.getByCity(cityInfo2.address)).thenReturn(cityInfo2);
+
+    String rainCheck = weatherService.compareCurrentlyRaining(cityInfo1.address, cityInfo2.address);
+
+    assertEquals("Lagos is currently experiencing rain", rainCheck);
+  }
+
 
 }

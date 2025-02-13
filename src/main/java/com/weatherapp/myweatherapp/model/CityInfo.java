@@ -17,7 +17,7 @@ public class CityInfo {
   @JsonProperty("days")
   List<Days> days;
 
-  public static class CurrentConditions { // changed to public
+  public static class CurrentConditions {
     @JsonProperty("temp")
     String currentTemperature;
 
@@ -34,7 +34,7 @@ public class CityInfo {
     String humidity;
 
     @JsonProperty("conditions")
-    String conditions;
+    public String conditions;
 
   }
 
