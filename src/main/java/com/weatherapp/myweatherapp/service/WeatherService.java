@@ -72,11 +72,11 @@ public class WeatherService {
     int daylight2 = getDaylightHours(city2);
 
     if (daylight1 > daylight2) {
-      return city1 + " has longer daylight hours.";
+      return city1 + " has more daylight hours than " + city2;
     } else if (daylight2 > daylight1) {
-      return city2 + " has longer daylight hours.";
+      return city2 + " has more daylight hours than " + city1;
     } else {
-      return "Both cities have the same daylight duration.";
+      return "Both cities have the same daylight duration."; // TODO: handle this case properly
     }
   }
 
