@@ -6,7 +6,7 @@ import java.util.List;
 public class CityInfo {
 
   @JsonProperty("address")
-  String address;
+  public String address;
 
   @JsonProperty("description")
   String description;

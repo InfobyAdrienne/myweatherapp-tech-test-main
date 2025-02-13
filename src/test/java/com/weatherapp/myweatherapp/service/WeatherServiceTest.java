@@ -2,8 +2,34 @@ package com.weatherapp.myweatherapp.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class WeatherServiceTest {
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-  // TODO: 12/05/2023 write unit tests
+
+import com.weatherapp.myweatherapp.repository.VisualcrossingRepository;
+import com.weatherapp.myweatherapp.model.CityInfo;
+
+@ExtendWith(MockitoExtension.class)
+class WeatherServiceTest {
+  @Mock
+  VisualcrossingRepository weatherRepo;
+
+  @InjectMocks
+  WeatherService weatherService;
+
+  @Test
+  void forecastByCity() {
+    CityInfo cityInfo = new CityInfo();
+    cityInfo.address = "Lagos";
+    Mockito.when(weatherRepo.getByCity(cityInfo.address)).thenReturn(cityInfo);
+
+    CityInfo result = weatherService.forecastByCity(cityInfo.address);
+
+    assertEquals(cityInfo, result);
+  }
 
 }

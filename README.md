@@ -63,3 +63,9 @@ The sunrise and sunset times are fetched from the currentConditions.sunrise and 
 The result can be found by using `curl -X GET "http://localhost:8080/compare-daylight/{city1}/{city2}"`
 
 For example: `curl -X GET "http://localhost:8080/compare-daylight/Tokyo/London"` 
+
+### Testing
+
+To run tests do `mvn test` from the root.
+
+Unit testing is done using Mockito  
