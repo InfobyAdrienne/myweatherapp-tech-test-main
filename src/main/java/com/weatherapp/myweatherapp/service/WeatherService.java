@@ -1,5 +1,7 @@
 package com.weatherapp.myweatherapp.service;
 
+import com.weatherapp.myweatherapp.exceptions.InvalidApiKeyException;
+import com.weatherapp.myweatherapp.exceptions.WeatherServiceException;
 import com.weatherapp.myweatherapp.model.CityInfo;
 import com.weatherapp.myweatherapp.repository.VisualcrossingRepository;
 
@@ -7,8 +9,8 @@ import java.time.LocalTime;
 import java.time.Duration;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 
 @Service
 public class WeatherService {
@@ -17,15 +19,18 @@ public class WeatherService {
   VisualcrossingRepository weatherRepo;
 
   public CityInfo forecastByCity(String city) {
-    return weatherRepo.getByCity(city);
+    try {
+      CityInfo cityInfo = weatherRepo.getByCity(city);
+      return cityInfo;
+    } catch (HttpClientErrorException.Unauthorized e) { 
+      throw new InvalidApiKeyException("Invalid API key: Please check your credentials.");
+    } catch (Exception e) { // Any unexpected error
+      throw new WeatherServiceException("Unexpected error while processing request for " + city);
+    }
   }
 
   public LocalTime getSunriseTime(String city) {
-    CityInfo cityInfo = weatherRepo.getByCity(city);
-
-    if (cityInfo.currentConditions.sunrise == null) {
-      throw new RuntimeException("Unable to fetch sunrise data for " + city);
-    }
+    CityInfo cityInfo = forecastByCity(city);
 
     String sunriseStr = cityInfo.currentConditions.sunrise;
     LocalTime sunrise = LocalTime.parse(sunriseStr);
@@ -34,11 +39,7 @@ public class WeatherService {
   }
 
   public LocalTime getSunsetTime(String city) {
-    CityInfo cityInfo = weatherRepo.getByCity(city);
-
-    if (cityInfo.currentConditions.sunset == null) {
-      throw new RuntimeException("Unable to fetch sunset data for " + city);
-    }
+    CityInfo cityInfo = forecastByCity(city);
 
     String sunsetStr = cityInfo.currentConditions.sunset;
     LocalTime sunset = LocalTime.parse(sunsetStr);
@@ -47,16 +48,6 @@ public class WeatherService {
   }
 
   public int getDaylightHours(String city) {
-    CityInfo cityInfo = weatherRepo.getByCity(city);
-
-    if (cityInfo == null) {
-      throw new RuntimeException("Unable to fetch any data for " + city);
-    }
-
-    if (cityInfo.currentConditions == null) {
-      throw new RuntimeException("Unable to fetch current conditions for " + city);
-    }
-
     LocalTime sunrise = getSunriseTime(city);
     LocalTime sunset = getSunsetTime(city);
 
@@ -73,12 +64,12 @@ public class WeatherService {
     } else if (daylight2 > daylight1) {
       return city2 + " has more daylight hours than " + city1;
     } else {
-      return "Both cities have the same daylight duration."; // TODO: handle this case properly
+      return "Both cities have the same daylight duration.";
     }
   }
 
   public Boolean isCurrentlyRaining(String city) {
-    CityInfo cityInfo = weatherRepo.getByCity(city);
+    CityInfo cityInfo = forecastByCity(city);
 
     if (cityInfo.currentConditions.conditions.toLowerCase().contains("rain")) {
       return true;
