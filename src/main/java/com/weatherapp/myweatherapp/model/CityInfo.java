@@ -6,26 +6,26 @@ import java.util.List;
 public class CityInfo {
 
   @JsonProperty("address")
-  String address;
+  public String address;
 
   @JsonProperty("description")
   String description;
 
   @JsonProperty("currentConditions")
-  CurrentConditions currentConditions;
+  public CurrentConditions currentConditions;
 
   @JsonProperty("days")
   List<Days> days;
 
-  static class CurrentConditions {
+  public static class CurrentConditions {
     @JsonProperty("temp")
     String currentTemperature;
 
     @JsonProperty("sunrise")
-    String sunrise;
+    public String sunrise;
 
     @JsonProperty("sunset")
-    String sunset;
+    public String sunset;
 
     @JsonProperty("feelslike")
     String feelslike;
@@ -34,7 +34,8 @@ public class CityInfo {
     String humidity;
 
     @JsonProperty("conditions")
-    String conditions;
+    public String conditions;
+
   }
 
   static class Days {
