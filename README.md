@@ -13,7 +13,7 @@ The codebase is a Java application built with the Spring framework. It includes 
 - API key for [Visual Crossing Weather API](https://www.visualcrossing.com/weather-data-editions). 
   - This can be done by creating a free account on the above link. Then you will need to add your key to the `weather.visualcrossing.key` field in src/main/resources/application.properties
 
-### Instructions for getting started
+## Instructions for getting started
 
 Operating system: macOs
 
@@ -23,7 +23,7 @@ To run the app use `mvn spring-boot:run` from your root folder.
 
 While the app is running, in a seperate terminal test the API using `curl -X GET "http://localhost:8080/forecast/London"`
 
-### User stories
+## User stories
 
 Daylight Hours Comparison
 
@@ -51,13 +51,13 @@ The result can be found by using `curl -X GET "http://localhost:8080/compare-cur
 
 For example: `curl -X GET "http://localhost:8080/compare-currently-raining/Tokyo/London"` 
 
-### Testing
+## Testing
 
 To run tests do `mvn test` from the root.
 
 For unit testing I have focused on testing the WeatherService class. The tests ensure the accuracy and reliability of weather-related functionalities, including: Fetching weather forecasts, sunrise and sunset times, calculating the daylight durtaion and weather comparisons for two cities (daylight duration and current weather conditions for rain). The tests are implemented using JUnit 5 and Mockito for mocking API calls to the VisualcrossingRepository.
 
-### Other points to consider 
+## Other points to consider 
 
 * When I first began working on user story one I iniitally only had cone function compareDaylight() method but when writing unit tests decided it would be better to split this method into smaller, more focused functions. This refactoring improved testability, readability, reusability, maintainability, and debugging while following best practices like the Single Responsibility Principle.
 
